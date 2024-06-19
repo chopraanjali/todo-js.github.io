@@ -7,8 +7,8 @@ function addItemToList() {
     listItem.innerText = input.value;
     listItem.classList.add('toDoItem');
     listItem.setAttribute('onClick', 'strikeText(this)');
-
     currentList.appendChild(listItem);
+    handleEnterKeyPress(input);
   }
   clearField(input);
 }
@@ -19,6 +19,14 @@ function strikeText(element) {
 
 function clearField(field) {
   field.value = '';
+}
+
+function handleEnterKeyPress(input) {
+  input.addEventListener('keypress', function (event) {
+    if (event.key === 'Enter') {
+      document.getElementById('Add').click();
+    }
+  });
 }
 
 function addDeleteButton() {
