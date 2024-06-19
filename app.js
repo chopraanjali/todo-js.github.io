@@ -1,41 +1,42 @@
+function addItemToList() {
+  const currentList = document.getElementById('toDoList');
+  const listItem = document.createElement('li');
 
-let input = prompt('What would you like to do?');
+  const input = document.getElementById('item');
+  if (input.value) {
+    listItem.innerText = input.value;
+    listItem.classList.add('toDoItem');
+    listItem.setAttribute('onClick', 'strikeText(this)');
 
-const todoList = ['Prepare dinner', 'Go for a walk'];
-
-
-while (input !== 'quit' && input !== 'q') {
-    if (input === 'list') {
-        console.log('------------------');
-
-        // List out items 
-        for (let i = 0; i < todoList.length; i++) {
-            console.log(`${i + 1}: ${todoList[i]}`);
-        }
-
-        console.log('------------------');
-    } else if (input === 'add') {
-        input = prompt('What would you like to add?')
-        todoList.push(input);
-        console.log(`${input} added to the list!`)
-
-    } else if (input === 'delete') {
-        console.log('Here is your list!')
-        for (let i = 0; i < todoList.length; i++) {
-            console.log(`${i + 1}: ${todoList[i]}`);
-        }
-        input = prompt('Which item would you like to delete? Enter index of item.');
-        const index = parseInt(input);
-        if (!Number.isNaN(index) && index < todoList.length) {
-
-            const deleted = todoList.splice(index - 1, 1);
-            console.log(`Deleted item ${index}: ${deleted}!`);
-
-        } else {
-
-            console.log('Unknown index!')
-        }
-    }
-    input = prompt('What would you like to do?');
+    currentList.appendChild(listItem);
+  }
+  clearField(input);
 }
-console.log('Exiting the app!')
+
+function strikeText(element) {
+  element.classList.toggle('itemDone');
+}
+
+function clearField(field) {
+  field.value = '';
+}
+
+function addDeleteButton() {
+  const itemsDone = document.querySelectorAll('.toDoItem');
+  if (itemsDone.length !== 0) {
+    const getDiv = document.getElementById('delete');
+    const button = document.createElement('button');
+    button.textContent = 'Clear List';
+    button.setAttribute('onClick', 'deleteAllItems()');
+    getDiv.appendChild(button);
+  }
+}
+
+addDeleteButton();
+
+function deleteAllItems() {
+  const items = document.querySelectorAll('.toDoItem');
+  for (let i = 0; i < items.length; i++) {
+    items[i].remove();
+  }
+}
